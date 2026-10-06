@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f0e8" />
+    <title>Смена — дневник водителя</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Смена — главная">
+          <span class="brand-mark" aria-hidden="true">С</span>
+          <span>СМЕНА</span>
+        </a>
+        <div class="status"><span></span> Смена завершена</div>
+        <button class="avatar" aria-label="Профиль водителя">АК</button>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Дневник водителя</p>
+            <h1>Добрый день,<br /><em>Алексей</em></h1>
+          </div>
+          <div class="date-control" aria-label="Выбор даты">
+            <button id="previous-day" class="icon-button" aria-label="Предыдущий день">←</button>
+            <label class="date-label">
+              <span id="pretty-date">—</span>
+              <input id="date-picker" type="date" aria-label="Дата" />
+            </label>
+            <button id="next-day" class="icon-button" aria-label="Следующий день">→</button>
+          </div>
+        </section>
+
+        <section class="summary" aria-labelledby="summary-title">
+          <div class="section-heading">
+            <h2 id="summary-title">Итоги дня</h2>
+            <span id="trip-count" class="count-badge">0 поездок</span>
+          </div>
+          <div class="summary-grid">
+            <article class="metric metric-primary">
+              <span class="metric-label">На руки</span>
+              <strong id="net">0 ₸</strong>
+              <span class="metric-note">после комиссии сервиса</span>
+              <div class="route-line"><i></i><i></i><i></i></div>
+            </article>
+            <article class="metric">
+              <span class="metric-label">Выручка</span>
+              <strong id="revenue">0 ₸</strong>
+              <span class="metric-note">вся сумма поездок</span>
+            </article>
+            <article class="metric">
+              <span class="metric-label">Комиссия</span>
+              <strong id="commission">0 ₸</strong>
+              <span class="metric-note" id="commission-rate">0% от выручки</span>
+            </article>
+          </div>
+          <div class="payment-strip">
+            <div class="payment-item"><span class="payment-icon cash">₸</span><span><small>Наличные</small><b id="cash-amount">0 ₸</b></span><em id="cash-count">0</em></div>
+            <div class="payment-divider"></div>
+            <div class="payment-item"><span class="payment-icon card">▰</span><span><small>Карта</small><b id="card-amount">0 ₸</b></span><em id="card-count">0</em></div>
+          </div>
+        </section>
+
+        <section class="trips" aria-labelledby="trips-title">
+          <div class="section-heading">
+            <div><p class="eyebrow">Маршрутный лист</p><h2 id="trips-title">Поездки</h2></div>
+            <button id="open-form" class="add-button"><span>＋</span> Добавить поездку</button>
+          </div>
+          <div id="trip-list" class="trip-list" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <footer><span>СМЕНА / 2026</span><span>Честный учёт каждого километра</span></footer>
+    </div>
+
+    <dialog id="trip-dialog">
+      <form id="trip-form" method="dialog">
+        <div class="dialog-head">
+          <div><p class="eyebrow">Новая запись</p><h2>Добавить поездку</h2></div>
+          <button type="button" id="close-form" class="close-button" aria-label="Закрыть">×</button>
+        </div>
+        <div class="form-grid">
+          <label><span>Начало</span><input name="start" type="datetime-local" required /></label>
+          <label><span>Окончание</span><input name="end" type="datetime-local" required /></label>
+          <label><span>Сумма, ₸</span><input name="amount" type="number" min="1" step="1" required placeholder="2400" /></label>
+          <label><span>Комиссия, ₸</span><input name="commission" type="number" min="0" step="1" required placeholder="360" /></label>
+        </div>
+        <fieldset>
+          <legend>Способ оплаты</legend>
+          <label class="radio"><input type="radio" name="payment" value="card" checked /><span>Карта</span></label>
+          <label class="radio"><input type="radio" name="payment" value="cash" /><span>Наличные</span></label>
+        </fieldset>
+        <p id="form-error" class="form-error" role="alert"></p>
+        <button class="submit-button" type="submit">Сохранить поездку</button>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
