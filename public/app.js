@@ -85,6 +85,13 @@ function showToast(message) {
   setTimeout(() => toast.classList.remove('visible'), 2800);
 }
 
+function apiErrorMessage(result) {
+  if (Array.isArray(result.detail)) {
+    return result.detail.map((item) => item.msg).join('. ');
+  }
+  return result.detail || result.error || 'Не удалось сохранить поездку';
+}
+
 $('#previous-day').addEventListener('click', () => shiftDate(-1));
 $('#next-day').addEventListener('click', () => shiftDate(1));
 datePicker.addEventListener('change', () => setDate(datePicker.value));
@@ -114,7 +121,7 @@ form.addEventListener('submit', async (event) => {
       method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data)
     });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.details?.join('. ') || result.error);
+    if (!response.ok) throw new Error(apiErrorMessage(result));
     dialog.close();
     form.reset();
     setDate(data.start.slice(0, 10));

@@ -1,0 +1,10 @@
+services:
+  shift-diary:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      TRIPS_FILE: /app/data/trips.json
+    restart: unless-stopped
